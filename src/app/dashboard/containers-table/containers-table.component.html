@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Containars running on selected host</h3>
+  </div>
+  <table class="table table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Memory Limit</th>
+        <th>Usage RAM</th>
+        <th>Usage CPU</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let container of containers">
+        <td>{{container.name}}</td>
+        <td>{{container.memory_limit}} MB</td>
+        <td>{{container.memory_percent}} %</td>
+        <td>{{container.cpu_percent}} %</td>        
+      </tr>
+      <tr class="active">
+          <td>Total:</td>
+          <td>-</td>
+          <td>{{totalRamUsage}}</td>
+          <td>{{mean}} %</td>   
+      </tr>
+    </tbody>
+  </table>
+</div>

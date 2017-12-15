@@ -1,0 +1,38 @@
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>
+        You are watching {{selectedHost}}
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-xs-12">
+              <app-cpu-chart *ngIf="coreUsage; else infoText" [cpuUsage]="coreUsage" ></app-cpu-chart>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <app-containers-table *ngIf="containers; else infoText" [containers]="containers"></app-containers-table>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="col-md-6">
+          <app-containers-chart *ngIf="containers; else infoText" [containers]="containers"></app-containers-chart>
+          <hr>
+          <app-ram-gauge *ngIf="memoryData; else infoText"[memoryData]="memoryData"></app-ram-gauge>
+          <hr>
+          <app-containers-pie-chart></app-containers-pie-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #infoText>
+    <h1>Waiting for data...</h1>
+</ng-template>
