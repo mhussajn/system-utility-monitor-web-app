@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges, ElementRef } from '@angular/core';
 import { ChartComponent } from 'angular2-chartjs';
 
 @Component({
@@ -8,6 +8,9 @@ import { ChartComponent } from 'angular2-chartjs';
 })
 export class ContainersChartComponent implements OnInit, OnChanges {
   @ViewChild(ChartComponent) chart: ChartComponent;
+  @ViewChild('shiftInput') shiftInputRef: ElementRef;
+  shift = 100;
+
   @Input() containers;
   constructor() { }
   type = 'line';
@@ -30,6 +33,12 @@ export class ContainersChartComponent implements OnInit, OnChanges {
     }
   };
 
+  onChangeShift() {
+    const shift = this.shiftInputRef.nativeElement.value;
+    this.shiftInputRef.nativeElement.value = '';
+    this.shift = shift;
+  }
+
   ngOnInit() {
     this.containers.forEach(container => {
         const color = (Math.random() * 0xFFFFFF<<0).toString(16);
@@ -40,7 +49,6 @@ export class ContainersChartComponent implements OnInit, OnChanges {
         borderColor: ['#' + color],
         borderWidth: 2,
         fill: 'origin',
-        cubicInterpolationMode: 'monotone',
         pointRadius: 2});
     });
   }
@@ -50,9 +58,9 @@ export class ContainersChartComponent implements OnInit, OnChanges {
       dataset.data.push(this.containers[index].cpu_percent);
     });
     this.data.labels.push(new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds());
-    if (this.data.datasets[0].data.length > 20) {
-      this.data.datasets.forEach((element, index) => {
-        this.data.datasets[index].data.shift();
+    if (this.data.datasets[0].data.length > this.shift) {
+      this.data.datasets.forEach((element) => {
+        element.data.shift();
       });
       this.data.labels.shift();
     }

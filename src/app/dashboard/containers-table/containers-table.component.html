@@ -1,29 +1,46 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Containars running on selected host</h3>
+    <h3 class="panel-title">Containers running</h3>
   </div>
+  <!-- <div style="height: 400px; overflow-y: auto" > -->
+
   <table class="table table-hover table-condensed">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Memory Limit</th>
-        <th>Usage RAM</th>
-        <th>Usage CPU</th>        
+        <th class="text-center">DiskIO (r/w)</th>
+        <th class="text-center">NetIO (r/s)</th>
+        <th class="text-center">Mem Limit</th>
+        <th class="text-center">RAM %</th>
+        <th class="text-center">CPU %</th>     
+        <th class="text-center">Pids</th>   
       </tr>
     </thead>
-    <tbody>
+    <tbody >
       <tr *ngFor="let container of containers">
         <td>{{container.name}}</td>
-        <td>{{container.memory_limit}} MB</td>
-        <td>{{container.memory_percent}} %</td>
-        <td>{{container.cpu_percent}} %</td>        
+        <td class="text-center" *ngIf="container.blockIO.r > 0; else noData">{{container.blockIO.r}}/{{container.blockIO.w}} MB</td>
+        <td class="text-center" *ngIf="container.netIO.r > 0; else noData">{{container.netIO.r}}/{{container.netIO.w}} MB</td>
+        <td class="text-center">{{container.memory_limit}} MB</td>
+        <td class="text-center">{{container.memory_percent}}</td>
+        <td class="text-center">{{container.cpu_percent}}</td>
+        <td class="text-center">{{container.pids}}</td>
       </tr>
       <tr class="active">
           <td>Total:</td>
-          <td>-</td>
-          <td>{{totalRamUsage}}</td>
-          <td>{{mean}} %</td>   
+          <td class="text-center"></td>
+          <td class="text-center"></td>
+          <td class="text-center"></td>
+          <td class="text-center">{{totalRamUsage}}MB</td>
+          <td class="text-center">{{mean}}</td>   
+          <td></td>
       </tr>
     </tbody>
   </table>
+<!-- </div> -->
+
 </div>
+
+<ng-template #noData>
+  <td class="text-center">-</td>
+</ng-template>

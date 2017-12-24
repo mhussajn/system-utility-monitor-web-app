@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges } from '@angular/core';
 
 import { ChartComponent } from 'angular2-chartjs';
 
@@ -7,7 +7,7 @@ import { ChartComponent } from 'angular2-chartjs';
   templateUrl: './ram-gauge.component.html',
   styleUrls: ['./ram-gauge.component.css']
 })
-export class RamGaugeComponent implements OnInit, OnChanges {
+export class RamGaugeComponent implements OnChanges {
   @Input() memoryData: any;
 
   @ViewChild('ChartComponent') chart: ChartComponent;
@@ -20,14 +20,19 @@ export class RamGaugeComponent implements OnInit, OnChanges {
       backgroundColor: ['#ff6384', '#36a2eb', '#27b4cd']
     }]
   };
+  options = {
+    legend: {
+      position: 'right'
+    },
+    layout: {
+      padding: 10
+    }
+  };
 
   constructor() { }
 
   byteToMega(number: number) {
     return Math.round(number / 1048576);
-  }
-
-  ngOnInit() {
   }
 
   ngOnChanges() {

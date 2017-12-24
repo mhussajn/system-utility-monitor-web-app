@@ -13,15 +13,21 @@ export class ActiveHostsListComponent implements OnInit {
 
   constructor(private webSocket: WebSocketService) { }
 
+  onRefresh() {
+    this.webSocket.askForData();
+  }
+
   ngOnInit() {
     this.webSocket.askForData();
     this.connection = this.webSocket.getHosts().subscribe(list => {
       console.log('Received list');
+      const hosts = [];
       for (const key in list) {
         if (list.hasOwnProperty(key)) {
-          this.activeHosts.push(list[key].name);
+          hosts.push(list[key].name);
         }
       }
+      this.activeHosts = hosts;
     });
   }
 }

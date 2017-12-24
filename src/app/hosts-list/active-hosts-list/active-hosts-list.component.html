@@ -1,6 +1,16 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4>Active Hosts</h4>
+    <div class="row">
+
+    
+    <div class="col-xs-6">
+        <h4>Active Hosts</h4>
+
+    </div>
+    <div class="col-xs-6">
+      <button class="btn btn-default pull-right" (click)="onRefresh()">Refresh</button>
+    </div>
+  </div>
   </div>
   <div class="panel-body">
     <app-active-host *ngFor="let activeHost of activeHosts" [activeHost]="activeHost"></app-active-host>

@@ -1,26 +1,27 @@
 <a class="list-group-item clearfix" (click)="onSelected()">
   <div class="row">
-    <div class="col-xs-12">
-      <div class="pull-left">
-        <h4 class="list-group-item-heading">{{activeHost}}</h4>
-      </div>
-      <span class="pull-right">
-        <span class="badge">{{containersNumber}}</span>
-      </span>
+    <div class="col-xs-12 text-center">
+      <h4 class="list-group-item-heading">{{activeHost}}</h4>
+      <h4>
+      <span class="label label-primary">Time running: {{uptime}}</span>
+      
+        <span class="label label-primary">Number of containers: {{containersNumber}}</span>
+      </h4>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-xs-12">
       <div class="progress">
-        <div class="progress-bar" role="progressbar" [attr.aria-valuenow]="cpuPercent" aria-valuemin="0"  aria-valuemax="100" [style.width]="cpuPercent + '%'">
+        <div class="progress-bar" role="progressbar" [attr.aria-valuenow]="cpuPercent" aria-valuemin="0" aria-valuemax="100" [style.width]="cpuPercent + '%'">
           <span class="sr-only">{{cpuPercent}}</span>
         </div>
         <span class="progress-type">CPU</span>
         <span class="progress-completed">{{cpuPercent}}%</span>
       </div>
       <div class="progress" style="margin-top: 0.5em">
-        <div class="progress-bar progress-bar-danger" role="progressbar" [attr.aria-valuenow]="ramPercent" aria-valuemin="0" aria-valuemax="100" [style.width]="ramPercent + '%'">
+        <div class="progress-bar progress-bar-danger" role="progressbar" [attr.aria-valuenow]="ramPercent" aria-valuemin="0" aria-valuemax="100"
+          [style.width]="ramPercent + '%'">
           <span class="sr-only">{{ramPercent}}</span>
         </div>
         <span class="progress-type">RAM</span>

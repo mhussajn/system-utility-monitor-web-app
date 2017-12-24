@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, OnChanges, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, ElementRef } from '@angular/core';
 import { ChartComponent } from 'angular2-chartjs';
 
 @Component({
@@ -6,7 +6,7 @@ import { ChartComponent } from 'angular2-chartjs';
   templateUrl: './cpu-chart.component.html',
   styleUrls: ['./cpu-chart.component.css']
 })
-export class CpuChartComponent implements OnInit, AfterViewInit, OnChanges {
+export class CpuChartComponent implements OnInit, OnChanges {
   @ViewChild(ChartComponent) chart: ChartComponent;
   @ViewChild('shiftInput') shiftInputRef: ElementRef;
   @Input() cpuUsage: number[];
@@ -33,10 +33,10 @@ export class CpuChartComponent implements OnInit, AfterViewInit, OnChanges {
         data: [],
         backgroundColor: ['#' + color ],
         borderColor: ['#' + color ],
-        borderWidth: 2,
+        borderWidth: 1,
         fill: false,
         cubicInterpolationMode: 'monotone',
-        pointRadius: 1});
+        pointRadius: 0});
     });
   }
 
@@ -58,8 +58,5 @@ export class CpuChartComponent implements OnInit, AfterViewInit, OnChanges {
       this.data.labels.shift();
     }
     this.chart.chart.update();
-  }
-
-  ngAfterViewInit() {
   }
 }

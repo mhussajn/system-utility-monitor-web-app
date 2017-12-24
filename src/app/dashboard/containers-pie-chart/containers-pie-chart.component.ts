@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, Input  } from '@angular/core';
+import { Component, OnChanges, ViewChild, Input, OnInit  } from '@angular/core';
 import { ChartComponent } from 'angular2-chartjs';
 
 @Component({
@@ -6,20 +6,17 @@ import { ChartComponent } from 'angular2-chartjs';
   templateUrl: './containers-pie-chart.component.html',
   styleUrls: ['./containers-pie-chart.component.css']
 })
-export class ContainersPieChartComponent implements AfterViewInit {
-
+export class ContainersPieChartComponent implements OnChanges, OnInit {
+  @Input() containers: any;
   @ViewChild('ChartComponent') chart: ChartComponent;
 
-  defaultColors = [ '#3366CC', '#DC3912', '#FF9900', '#109618', '#990099',
-                    '#3B3EAC', '#0099C6', '#DD4477', '#66AA00', '#B82E2E',
-                    '#316395', '#994499', '#22AA99', '#AAAA11', '#6633CC',
-                    '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'];
     type = 'pie';
     data = {
-      labels: ['Container1', 'Container2', 'Container3', 'Container4'],
+      labels: [],
       datasets: [{
-        data: [15, 35, 20, 30],
-        backgroundColor: []
+        data: [],
+        backgroundColor: [],
+        borderWidth: 0
       }]
     };
     options = {
@@ -28,12 +25,17 @@ export class ContainersPieChartComponent implements AfterViewInit {
 
   constructor() { }
 
-  ngAfterViewInit() {
-    this.data.labels.forEach((element, index) => {
-      this.data.datasets[0].backgroundColor.push(this.defaultColors[index]);
+  ngOnInit() {
+    this.containers.forEach(container => {
+      this.data.labels.push(container.name);
+      this.data.datasets[0].backgroundColor.push('#' + (Math.random() * 0xFFFFFF<<0).toString(16));
     });
-    this.chart.chart.update();
-    console.log(this.data.datasets[0].backgroundColor[0]);
   }
 
+  ngOnChanges() {
+    this.containers.forEach(container => {
+      this.data.datasets[0].data.push((container.memory_percent / 100) * container.memory_limit);
+    });
+    this.chart.chart.update();
+  }
 }

@@ -14,7 +14,7 @@ export class ContainersTableComponent implements OnChanges {
   ngOnChanges() {
     this.mean = Math.floor(this.containers.reduce((sum, container) => sum + container.cpu_percent, 0) * 100) / 100;
     this.totalRamUsage = Math.floor((this.containers.reduce((sum, container) =>
-      sum + ((container.memory_percent / 100) * container.memory_limit), 0)) * 100) / 100;
+      sum + ((container.memory_percent / 100) * container.memory_limit), 0)));
   }
 
 }

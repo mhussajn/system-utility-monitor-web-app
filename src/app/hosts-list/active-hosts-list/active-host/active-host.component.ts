@@ -13,6 +13,7 @@ export class ActiveHostComponent implements OnInit {
   ramArray = [];
   ramPercent: number;
   containersNumber: number;
+  uptime: any;
 
   constructor(private dataService: DataService) { }
 
@@ -37,6 +38,10 @@ export class ActiveHostComponent implements OnInit {
         }, 0) / this.ramArray.length) * 100 * 100 ) / 100;
 
         this.containersNumber = data.containersNumber;
+
+        const time = new Date(null);
+        time.setSeconds(data.uptime);
+        this.uptime = time.toISOString().substr(11, 8);
       }
     });
   }
