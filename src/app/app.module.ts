@@ -6,9 +6,6 @@ import { ChartModule } from 'angular2-chartjs';
 import { WebSocketService } from './web-socket.service';
 import { DataService } from './data.service';
 
-import { jqxBarGaugeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbargauge';
-import { jqxChartComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxchart';
-
 import { AppComponent } from './app.component';
 import { HostsListComponent } from './hosts-list/hosts-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,12 +16,11 @@ import { RamGaugeComponent } from './dashboard/ram-gauge/ram-gauge.component';
 import { ContainersTableComponent } from './dashboard/containers-table/containers-table.component';
 import { ContainersPieChartComponent } from './dashboard/containers-pie-chart/containers-pie-chart.component';
 import { ContainersChartComponent } from './dashboard/containers-chart/containers-chart.component';
+import { DiskUsageComponent } from './dashboard/disk-usage/disk-usage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    jqxBarGaugeComponent,
-    jqxChartComponent,
     HostsListComponent,
     DashboardComponent,
     ActiveHostsListComponent,
@@ -34,6 +30,7 @@ import { ContainersChartComponent } from './dashboard/containers-chart/container
     ContainersTableComponent,
     ContainersPieChartComponent,
     ContainersChartComponent,
+    DiskUsageComponent,
   ],
   imports: [
     BrowserModule,

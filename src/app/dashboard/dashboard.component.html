@@ -24,8 +24,7 @@
         <div class="col-xs-4">
           <app-ram-gauge *ngIf="memoryData; else infoText" [memoryData]="memoryData"></app-ram-gauge>
           <hr>
-          <app-containers-pie-chart *ngIf="containers; else infoText" [containers]="containers"></app-containers-pie-chart>
-
+          <app-disk-usage *ngIf="diskData; else infoText" [diskData]="diskData"></app-disk-usage>
         </div>
       </div>
     </div>
