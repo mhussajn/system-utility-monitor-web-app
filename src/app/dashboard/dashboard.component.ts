@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   roundToPercent(number) {
-    return Math.floor(number * 100) / 100;
+    return (Math.floor(number * 100) / 100);
   }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
           'path': storage[key].fs,
           'size': this.roundToMb(storage[key].size),
           'used': this.roundToMb(storage[key].used),
-          'usedPercent': this.roundToPercent(storage[key].used / storage[key].size)
+          'usedPercent': this.roundToPercent(storage[key].used / storage[key].size * 100)
         };
       });
 
