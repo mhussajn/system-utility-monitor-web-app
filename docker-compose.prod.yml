@@ -7,6 +7,6 @@ nginx:
 
 app:
   image: $CONTAINER_APP_IMAGE
-  command: bash -c "cp dist/* /usr/src/app/dist/"
+  command: cp dist/* /usr/src/app/dist/
   volumes:
     - front:/usr/src/app/dist/

@@ -2,9 +2,12 @@ variables:
   DOCKER_DRIVER: overlay
   CONTAINER_APP_IMAGE: $CI_REGISTRY_IMAGE/app:$CI_COMMIT_TAG
   CONTAINER_NGINX_IMAGE: $CI_REGISTRY_IMAGE/nginx:$CI_COMMIT_TAG
+  CONTAINER_APP_IMAGE_LATEST: $CI_REGISTRY_IMAGE/app:latest
+  CONTAINER_NGINX_IMAGE_LATEST: $CI_REGISTRY_IMAGE/nginx:latest
 
 stages:
   - build
+  - release
   - deploy
 
 .build_template: &build_definition
@@ -17,7 +20,8 @@ build app:
   <<: *build_definition
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker build --tag $CONTAINER_APP_IMAGE app/
+    - docker pull $CONTAINER_APP_IMAGE_LATEST || true
+    - docker build --cache-from $CONTAINER_APP_IMAGE_LATEST --tag $CONTAINER_APP_IMAGE app/
     - docker push $CONTAINER_APP_IMAGE
   only:
     - tags
@@ -26,8 +30,25 @@ build nginx:
   <<: *build_definition
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker build --tag $CONTAINER_NGINX_IMAGE nginx/
+    - docker pull $CONTAINER_NGINX_IMAGE_LATEST || true
+    - docker build --cache-from $CONTAINER_NGINX_IMAGE_LATEST --tag $CONTAINER_NGINX_IMAGE nginx/
     - docker push $CONTAINER_NGINX_IMAGE
+  only:
+    - tags
+
+rename images:
+  stage: release
+  image: docker:17.06.0
+  services:
+    - docker:17.06.0-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull $CONTAINER_NGINX_IMAGE
+    - docker tag $CONTAINER_NGINX_IMAGE $CONTAINER_NGINX_IMAGE_LATEST
+    - docker push $CONTAINER_NGINX_IMAGE_LATEST
+    - docker pull $CONTAINER_APP_IMAGE
+    - docker tag $CONTAINER_APP_IMAGE $CONTAINER_APP_IMAGE_LATEST
+    - docker push $CONTAINER_APP_IMAGE_LATEST
   only:
     - tags
 
