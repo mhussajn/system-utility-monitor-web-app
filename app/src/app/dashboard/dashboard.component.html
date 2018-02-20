@@ -1,0 +1,42 @@
+<div class="panel-group" *ngIf="selectedHost; else noHostSelected">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>
+        You are watching {{selectedHost}}
+      </h4>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-6">
+          <app-cpu-chart *ngIf="coreUsage; else infoText" [cpuUsage]="coreUsage"></app-cpu-chart>
+        </div>
+        <div class="col-xs-6">
+          <app-containers-chart *ngIf="containers; else infoText" [containers]="containers"></app-containers-chart>
+
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-8">
+          <app-containers-table *ngIf="containers; else infoText" [containers]="containers"></app-containers-table>
+
+        </div>
+        <div class="col-xs-4">
+          <app-ram-gauge *ngIf="memoryData; else infoText" [memoryData]="memoryData"></app-ram-gauge>
+          <hr>
+          <app-disk-usage *ngIf="diskData; else infoText" [diskData]="diskData"></app-disk-usage>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noHostSelected>
+  <div class="alert alert-danger">
+    <strong>Warning!</strong> Please select host.
+  </div>
+</ng-template>
+
+<ng-template #infoText>
+  <h1>Waiting for data...</h1>
+</ng-template>

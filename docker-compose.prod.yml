@@ -1,0 +1,12 @@
+nginx:
+  image: $CONTAINER_NGINX_IMAGE
+  volumes:
+    - front:/usr/src/app/
+  expose:
+    - "80"
+
+app:
+  image: $CONTAINER_APP_IMAGE
+  command: bash -c "cp dist/* /usr/src/app/dist/"
+  volumes:
+    - front:/usr/src/app/dist/
